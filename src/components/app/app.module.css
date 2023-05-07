@@ -5,3 +5,23 @@
   background-color: #131316;
   color: #f2f2f3;
 }
+
+.page {
+  display: flex;
+  flex-direction: column;
+  width: 2000px;
+  justify-content: center;
+}
+
+.main {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+}
+
+.section {
+  display: flex;
+  width: 600px;
+  height: 912px;
+}
+
