@@ -6,8 +6,6 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 
 
-
-
 function App() {
   return (
     <div className={styles.app}>

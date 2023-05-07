@@ -5,6 +5,8 @@ import {
   DragIcon, Button
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { data } from "../../utils/data";
+import { ingredientPropType } from "../../utils/prop-types";
+import PropTypes from "prop-types";
 
 function BurgerConstructor() {
   //находим булку из data.js
@@ -17,14 +19,18 @@ function BurgerConstructor() {
       <>
         {data.map((item) => {
           return (
-            <div className={styles.component}>
+            <div key={item._id} className={styles.component}>
               <DragIcon type="primary" />
-              <ConstructorElement key={item._id} thumbnail={item.image} price={item.price} text={item.name} />
+              <ConstructorElement thumbnail={item.image} price={item.price} text={item.name} />
             </div>
           )
         })}
       </>
     )
+  }
+
+  ingridientList.propTypes = {
+    data: PropTypes.arrayOf(ingredientPropType).isRequired
   }
 
   return (
@@ -45,11 +51,11 @@ function BurgerConstructor() {
       <div className={styles.result}>
         <div className={styles.price}>
           <p className={`${styles.alignment} text text_type_digits-medium`}>610</p>
-          <CurrencyIcon type="primary" className={styles.alignment}/>
+          <CurrencyIcon type="primary" className={styles.alignment} />
         </div>
-        <Button htmlType="button" type="primary" size="medium" style={{width: '215px'}} >
-            Оформить заказ
-          </Button>
+        <Button htmlType="button" type="primary" size="medium" style={{ width: '215px' }} >
+          Оформить заказ
+        </Button>
       </div>
     </div>
 

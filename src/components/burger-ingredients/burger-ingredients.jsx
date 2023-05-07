@@ -1,16 +1,15 @@
 import React from "react";
 import styles from "./burger-ingredients.module.css";
-import {
-  Tab, Counter
-} from '@ya.praktikum/react-developer-burger-ui-components'
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import Ingredient from "../ingridient/ingridient";
 import { data } from "../../utils/data";
-
-
+import { ingredientPropType } from "../../utils/prop-types";
+import PropTypes from "prop-types";
 
 function BurgerIngredients() {
   const [current, setCurrent] = React.useState('one');
+
   //булки из data.js
   const buns = data.filter(item => item.type === "bun");
 
@@ -32,6 +31,11 @@ function BurgerIngredients() {
       </>
     )
   }
+
+  ingridientList.propTypes = {
+    data: PropTypes.arrayOf(ingredientPropType).isRequired
+  }
+
   return (
     <>
       <div >
@@ -39,17 +43,17 @@ function BurgerIngredients() {
           Соберите бургер
         </p>
         <div className={`${styles.main_menu} mb-10`}>
-          <Tab value="one" active={current === 'one'} onClick={setCurrent}>
+          <Tab value="buns" active={current === 'buns'} onClick={setCurrent}>
             Булки
           </Tab>
-          <Tab value="two" active={current === 'two'} onClick={setCurrent}>
+          <Tab value="sauces" active={current === 'sauces'} onClick={setCurrent}>
             Соусы
           </Tab>
-          <Tab value="three" active={current === 'three'} onClick={setCurrent}>
+          <Tab value="fillings" active={current === 'fillings'} onClick={setCurrent}>
             Начинки
           </Tab>
         </div>
-        <div className='custom-scroll' style={{ overflow: 'auto', maxHeight: '756px'}}>
+        <div className='custom-scroll' style={{ overflow: 'auto', maxHeight: '756px' }}>
           <p className="text text_type_main-medium">
             Булки
           </p>
@@ -74,15 +78,13 @@ function BurgerIngredients() {
             {ingridientList(fillings)}
           </div>
         </div>
-
-
       </div>
-
-
     </>
 
   )
 }
+
+
 
 export default BurgerIngredients
 
