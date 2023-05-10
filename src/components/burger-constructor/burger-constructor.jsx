@@ -1,18 +1,32 @@
 import React from "react";
+import { useState } from 'react'
 import styles from "./burger-constructor.module.css";
 import {
   ConstructorElement, CurrencyIcon,
   DragIcon, Button
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { data } from "../../utils/data";
 import { ingredientPropType } from "../../utils/prop-types";
 import PropTypes from "prop-types";
+import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
 
-function BurgerConstructor() {
+function BurgerConstructor({ data }) {
   //находим булку из data.js
-  const bun = data.find(item => item.type === "bun");
+  const buns = data.filter(item => item.type === "bun");
   // начинки и соусы 
   const units = data.filter(item => item.type !== "bun");
+
+const [visible, setVisible] = useState(false)
+
+  const closeModal = () => {
+    setVisible(false)
+  }
+
+  const modal = (
+    <Modal onClose={closeModal}>
+      <OrderDetails />
+    </Modal>
+  )
 
   const ingridientList = (data) => {
     return (
@@ -36,7 +50,9 @@ function BurgerConstructor() {
   return (
     <div className={styles.main}>
       <div className={styles.component}>
-        <ConstructorElement type="top" thumbnail={bun.image} price={bun.price} text={`${bun.name} (верх)`} isLocked={true} />
+        {buns.length > 0 &&
+          <ConstructorElement type="top" thumbnail={buns[0].image} price={buns[0].price} text={`${buns[0].name} (верх)`} isLocked={true} />
+        }
       </div>
 
       <div className={`${`custom-scroll`} ${styles.items}`} >
@@ -44,7 +60,9 @@ function BurgerConstructor() {
       </div>
 
       <div className={styles.component}>
-        <ConstructorElement type="bottom" thumbnail={bun.image} price={bun.price} text={`${bun.name} (низ)`} isLocked={true} />
+        {buns.length > 0 &&
+          <ConstructorElement type="bottom" thumbnail={buns[0].image} price={buns[0].price} text={`${buns[0].name} (низ)`} isLocked={true} />
+        }
       </div>
 
 
@@ -53,9 +71,14 @@ function BurgerConstructor() {
           <p className={`${styles.alignment} text text_type_digits-medium`}>610</p>
           <CurrencyIcon type="primary" className={styles.alignment} />
         </div>
-        <Button htmlType="button" type="primary" size="medium" style={{ width: '215px' }} >
+        <Button htmlType="button"
+          type="primary" size="medium"
+          style={{ width: '215px' }}
+          onClick={() => setVisible(true)}
+        >
           Оформить заказ
         </Button>
+        {visible && modal}
       </div>
     </div>
 

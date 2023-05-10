@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 40px auto 60px;
+  z-index: 10;
+}
+
+.title {
+  margin: 0;
+  text-align: start;
+}
+
+.image {
+  margin: 0 auto;
+  display: flex;
+  width: 520px;
+}
+
+.discription {
+  margin: 16px auto 32px;
+  text-align: center;
+}
+
+.info {
+  display: flex;
+  margin: 0 auto;
+  width: 516px;
+  gap: 20px;
+  align-items: center;
+}
+
+.value {
+  display: flex;
+  flex-direction: column;
+  min-width: 112px;
+  gap: 8px;
+  text-align: center;
+}
