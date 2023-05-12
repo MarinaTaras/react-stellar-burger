@@ -16,7 +16,7 @@ function BurgerConstructor({ data }) {
   // начинки и соусы 
   const units = data.filter(item => item.type !== "bun");
 
-const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(false)
 
   const closeModal = () => {
     setVisible(false)
@@ -41,10 +41,6 @@ const [visible, setVisible] = useState(false)
         })}
       </>
     )
-  }
-
-  ingridientList.propTypes = {
-    data: PropTypes.arrayOf(ingredientPropType).isRequired
   }
 
   return (
@@ -84,5 +80,9 @@ const [visible, setVisible] = useState(false)
 
   )
 }
+
+BurgerConstructor.propTypes = {
+    data: PropTypes.arrayOf(ingredientPropType).isRequired
+  }
 
 export default BurgerConstructor

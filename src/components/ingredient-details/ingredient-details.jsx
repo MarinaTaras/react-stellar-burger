@@ -3,8 +3,9 @@ import { ConstructorElement, Typography } from "@ya.praktikum/react-developer-bu
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
+import { ingridientDetailsPropType } from '../../utils/prop-types';
 
-function IngredientDetails({data}) {
+function IngredientDetails({ data }) {
   return (
 
     <div className={styles.container}>
@@ -40,5 +41,9 @@ function IngredientDetails({data}) {
     </div>
   )
 }
+
+IngredientDetails.propTypes = {
+  data: ingridientDetailsPropType.isRequired,
+};
 
 export default IngredientDetails

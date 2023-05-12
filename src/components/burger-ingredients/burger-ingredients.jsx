@@ -8,7 +8,7 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 
 
-function BurgerIngredients({data}) {
+function BurgerIngredients({ data }) {
   const [current, setCurrent] = React.useState(['buns']);
 
   //булки из data.js
@@ -31,10 +31,6 @@ function BurgerIngredients({data}) {
         })}
       </>
     )
-  }
-
-  ingridientList.propTypes = {
-    data: PropTypes.arrayOf(ingredientPropType).isRequired
   }
 
   return (
@@ -80,13 +76,15 @@ function BurgerIngredients({data}) {
           </div>
         </div>
       </div>
-      
+
     </>
 
   )
 }
 
-
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(ingredientPropType).isRequired
+}
 
 export default BurgerIngredients
 
