@@ -1,14 +1,15 @@
 import React from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-
 import Ingredient from "../ingridient/ingridient";
-import { data } from "../../utils/data";
 import { ingredientPropType } from "../../utils/prop-types";
 import PropTypes from "prop-types";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import Modal from "../modal/modal";
 
-function BurgerIngredients() {
-  const [current, setCurrent] = React.useState('one');
+
+function BurgerIngredients({ data }) {
+  const [current, setCurrent] = React.useState(['buns']);
 
   //булки из data.js
   const buns = data.filter(item => item.type === "bun");
@@ -25,15 +26,11 @@ function BurgerIngredients() {
       <>
         {data.map((item) => {
           return (
-            <Ingredient key={item._id} img={item.image} price={item.price} text={item.name} />
+            <Ingredient data={item} key={item._id} />
           )
         })}
       </>
     )
-  }
-
-  ingridientList.propTypes = {
-    data: PropTypes.arrayOf(ingredientPropType).isRequired
   }
 
   return (
@@ -79,12 +76,15 @@ function BurgerIngredients() {
           </div>
         </div>
       </div>
+
     </>
 
   )
 }
 
-
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(ingredientPropType).isRequired
+}
 
 export default BurgerIngredients
 
