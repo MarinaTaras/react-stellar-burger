@@ -1,0 +1,18 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  max-height: 912px;
+}
+
+.main_menu {
+  display: flex;
+}
+
+.ingridients {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  row-gap: 32px;
+}
+

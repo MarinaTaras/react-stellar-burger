@@ -1,0 +1,15 @@
+.ingridient {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 272px;
+  height: 208px;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  width: 240px;
+  height: 120px;
+}

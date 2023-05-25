@@ -1,0 +1,39 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 100px 16px 0;
+}
+
+.component {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: end;
+}
+
+.items {
+display: flex;
+flex-direction: column;
+gap: 16px;
+overflow: auto;
+height: 464px;
+}
+
+.result {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  align-self: end;
+  margin-top: 40px;
+}
+
+.price {
+  display: flex;
+  gap: 9.5px;
+  align-items: center;
+}
+
+.alignment {
+align-self: center;
+}
