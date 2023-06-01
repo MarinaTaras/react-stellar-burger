@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from 'react'
+import { useState, useReducer, useContext } from 'react'
 import styles from "./burger-constructor.module.css";
 import {
   ConstructorElement, CurrencyIcon,
@@ -9,12 +9,28 @@ import { ingredientPropType } from "../../utils/prop-types";
 import PropTypes from "prop-types";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
+import { BurgerIngredientsContext, BurgerOrderContext } from "../../services/burgerContext";
+import getOrder from "../../utils/order-api";
 
-function BurgerConstructor({ data }) {
+function BurgerConstructor() {
+
+  const data = useContext(BurgerIngredientsContext)
+  const { items } = data
+  const [order, setOrder] = useState()
+
+
+  function submitOrderNumber() {
+    const idArr = items.map(item => item._id)
+    getOrder(idArr).then((res) => {
+      setOrder(res.order.number)
+      setVisible(true)
+      })
+  }
+
   //находим булку из data.js
-  const buns = data.filter(item => item.type === "bun");
+  const buns = items.filter(item => item.type === "bun");
   // начинки и соусы 
-  const units = data.filter(item => item.type !== "bun");
+  const units = items.filter(item => item.type !== "bun");
 
   const [visible, setVisible] = useState(false)
 
@@ -24,19 +40,26 @@ function BurgerConstructor({ data }) {
 
   const modal = (
     <Modal onClose={closeModal}>
-      <OrderDetails />
+      <BurgerOrderContext.Provider value={order}>
+        <OrderDetails />
+      </BurgerOrderContext.Provider>
     </Modal>
   )
+  //константа стоимости заказа
+  // const orderPrice = { price: null }
 
-  const ingridientList = (data) => {
+  const ingridientList = (items) => {
+
     return (
       <>
-        {data.map((item) => {
+        {items.map((item) => {
           return (
+
             <div key={item._id} className={styles.component}>
               <DragIcon type="primary" />
               <ConstructorElement thumbnail={item.image} price={item.price} text={item.name} />
             </div>
+
           )
         })}
       </>
@@ -64,16 +87,17 @@ function BurgerConstructor({ data }) {
 
       <div className={styles.result}>
         <div className={styles.price}>
-          <p className={`${styles.alignment} text text_type_digits-medium`}>610</p>
+          <p className={`${styles.alignment} text text_type_digits-medium`}>{data.total}</p>
           <CurrencyIcon type="primary" className={styles.alignment} />
         </div>
         <Button htmlType="button"
           type="primary" size="medium"
           style={{ width: '215px' }}
-          onClick={() => setVisible(true)}
+          onClick={() => submitOrderNumber()}
         >
           Оформить заказ
         </Button>
+
         {visible && modal}
       </div>
     </div>
@@ -82,7 +106,7 @@ function BurgerConstructor({ data }) {
 }
 
 BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(ingredientPropType).isRequired
-  }
+  data: PropTypes.arrayOf(ingredientPropType)
+}
 
 export default BurgerConstructor

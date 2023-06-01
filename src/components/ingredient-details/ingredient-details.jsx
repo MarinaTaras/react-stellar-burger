@@ -5,7 +5,9 @@ import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import { ingridientDetailsPropType } from '../../utils/prop-types';
 
+
 function IngredientDetails({ data }) {
+  
   return (
 
     <div className={styles.container}>
