@@ -3,6 +3,7 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import IngredientDetails from '../ingredient-details/ingredient-details'
 import Modal from '../modal/modal'
 import { useState } from 'react'
+import { BurgerIngredientsContext } from '../../services/burgerContext'
 
 function Ingredient({ data }) {
 

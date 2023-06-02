@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import Ingredient from "../ingridient/ingridient";
@@ -6,25 +6,27 @@ import { ingredientPropType } from "../../utils/prop-types";
 import PropTypes from "prop-types";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
+import { BurgerIngredientsContext } from "../../services/burgerContext";
 
 
-function BurgerIngredients({ data }) {
+function BurgerIngredients() {
+  const data = useContext(BurgerIngredientsContext)
   const [current, setCurrent] = React.useState(['buns']);
-
+  const {items} = data
+  
   //булки из data.js
-  const buns = data.filter(item => item.type === "bun");
+  const buns = items.filter(item => item.type === "bun");
 
   //соусы из data.js
-  const sauces = data.filter(item => item.type === "sauce");
+  const sauces = items.filter(item => item.type === "sauce");
 
   //начинки из data.js
-  const fillings = data.filter(item => item.type === "main");
-  //console.log(fillings)
+  const fillings = items.filter(item => item.type === "main");
 
-  const ingridientList = (data) => {
+  const ingridientList = (items) => {
     return (
       <>
-        {data.map((item) => {
+        {items.map((item) => {
           return (
             <Ingredient data={item} key={item._id} />
           )
@@ -83,7 +85,7 @@ function BurgerIngredients({ data }) {
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropType).isRequired
+  data: PropTypes.arrayOf(ingredientPropType)
 }
 
 export default BurgerIngredients
