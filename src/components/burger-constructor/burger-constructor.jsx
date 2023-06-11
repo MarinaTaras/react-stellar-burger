@@ -2,39 +2,39 @@ import React, { useCallback } from "react";
 import { useState, useEffect } from 'react'
 import styles from "./burger-constructor.module.css";
 import {
-  ConstructorElement, CurrencyIcon,
-  DragIcon, Button
+  ConstructorElement, CurrencyIcon, Button
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ingredientPropType } from "../../utils/prop-types";
 import PropTypes from "prop-types";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { BurgerIngredientsContext, BurgerOrderContext } from "../../services/burgerContext";
-import getOrder from "../../utils/order-api";
+//import { BurgerIngredientsContext, BurgerOrderContext } from "../../services/burgerContext";
+//import getOrder from "../../utils/order-api";
 import { useDispatch, useSelector } from "react-redux";
 import { CALC_ORDER_PRICE, SORT_ITEMS } from "../../services/actions/actions";
 import { useDrop } from "react-dnd";
 import { ConstructorItem } from "../constructor-item/constructor-item";
+import { postOrderRequest } from "../../services/actions/api-actions";
 
 function BurgerConstructor({ onDropHandler }) {
-  
-  const [order, setOrder] = useState()
+
   const dispatch = useDispatch()
   const items = useSelector(state => state.constructorIngredients);
   const totalPrice = useSelector(state => state.orderPrice)
+  //const [order, setOrder] = useState()
 
   //реализация перетаскивания
-  const [{isHover}, dropTarget] = useDrop({
+  const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredient",
     drop(item) {
       onDropHandler(item);
     },
     collect: monitor => ({
-            isHover: monitor.isOver(),
-        })
+      isHover: monitor.isOver(),
+    })
   });
 
-  
+
   //стоимость заказа
   const calcOrderPrice = {
     type: CALC_ORDER_PRICE,
@@ -43,13 +43,15 @@ function BurgerConstructor({ onDropHandler }) {
   dispatch(calcOrderPrice)
 
 
-
   function submitOrderNumber() {
     const idArr = items.map(item => item._id)
-    getOrder(idArr).then((res) => {
-      setOrder(res.order.number)
-      setVisible(true)
-    })
+    dispatch(postOrderRequest(idArr))
+    // getOrder(idArr).then((res) => {
+    //   setOrder(res.order.number)
+    //   setVisible(true)
+    // })
+    setVisible(true)
+    //setOrder()
   }
 
   //находим булку из data.js
@@ -66,9 +68,9 @@ function BurgerConstructor({ onDropHandler }) {
 
   const modal = (
     <Modal onClose={closeModal}>
-      <BurgerOrderContext.Provider value={order}>
-        <OrderDetails />
-      </BurgerOrderContext.Provider>
+
+      <OrderDetails />
+
     </Modal>
   )
 
@@ -76,13 +78,13 @@ function BurgerConstructor({ onDropHandler }) {
     (dragIndex, hoverIndex) => {
       const sortItems = {
         type: SORT_ITEMS,
-        data: {dragIndex, hoverIndex}
+        data: { dragIndex, hoverIndex }
       }
       dispatch(sortItems);
     },
     [dispatch]
   );
-  
+
   return (
     <div className={styles.main}>
       <div className={styles.drop} ref={dropTarget} >
@@ -93,8 +95,8 @@ function BurgerConstructor({ onDropHandler }) {
         </div>
 
         <div className={`${`custom-scroll`} ${styles.items}`} >
-          {units?.map((item, idx) => <ConstructorItem 
-          ingredientItem={item} key={idx} idx={idx} moveHandler={moveHandler} />)}
+          {units?.map((item, idx) => <ConstructorItem
+            ingredientItem={item} key={idx} idx={idx} moveHandler={moveHandler} />)}
         </div>
 
         <div className={styles.component}>

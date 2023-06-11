@@ -1,16 +1,14 @@
 import { ADD_CONSTRUCTOR_INGRIDIENT, REMOVE_INGRIDIENT, SORT_ITEMS } from "../actions/actions"
 import { state } from "../state"
-import { v4 as uuidv4 } from "uuid"
 
-const initialState = state.constructorIngredients;
+const initialState = [];
 
 export const ingridientConstructorReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_CONSTRUCTOR_INGRIDIENT: {
 
       const item = action.data
-      item.uuid = uuidv4()
-
+      
       if (action.data.type === 'bun') {
         let ingred = [...state]
         ingred = ingred.filter(item => item.type !== 'bun')

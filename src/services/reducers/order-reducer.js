@@ -1,9 +1,9 @@
 import { CALC_ORDER_PRICE } from "../actions/actions";
-import { state } from "../state"
+//import { state } from "../state"
 
 //расчет стоимости заказа
 
-const initialState = state.orderPrice;
+const initialState = null;
 
 export const orderPriceReducer = (state = initialState, action) => {
   switch (action.type) {

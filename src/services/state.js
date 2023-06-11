@@ -12,5 +12,10 @@ export const state = {
       type: '',
     }
   },
-  orderPrice: null
+  orderPrice: null,
+  orderNumber: {
+    postOrderNumber: null,
+    postOrderRequest: false,
+    postOrderFailed: false,
+  }
 }

@@ -6,11 +6,13 @@ import { ingredientPropType } from "../../utils/prop-types";
 import PropTypes from "prop-types";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-import { BurgerIngredientsContext } from "../../services/burgerContext";
+//import { BurgerIngredientsContext } from "../../services/burgerContext";
 import { useInView } from 'react-intersection-observer';
+import { useSelector } from "react-redux";
 
 function BurgerIngredients() {
-  const items = useContext(BurgerIngredientsContext)
+  const { items, loading, errors } = useSelector(state => state.ingredients)
+ // const items = useContext(BurgerIngredientsContext)
   //const [current, setCurrent] = React.useState(['buns']);
   // const bun = "bun";
   // const sauce = "sauce";

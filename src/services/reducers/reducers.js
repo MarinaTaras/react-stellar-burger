@@ -1,7 +1,7 @@
 import { CHANGE_COUNT, GET_INGRIDIENTS_FAILED, GET_INGRIDIENTS_REQUEST, GET_INGRIDIENTS_SUCCESS} from "../actions/actions"
-import { state } from "../state"
+//import { state } from "../state"
 
-const initialState = state.ingredients
+const initialState = { items: [], loading: false, errors: false }
 
 export const ingridientReducer = (state = initialState, action) => {
   switch (action.type) {

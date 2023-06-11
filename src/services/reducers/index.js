@@ -3,11 +3,13 @@ import { ingridientReducer } from './reducers'
 import { currentIngridientReducer } from './current-ingredient';
 import { ingridientConstructorReducer } from './constructor-reduser';
 import { orderPriceReducer } from './order-reducer';
+import { postOrderRuduser } from './post-order-reduser';
 
 //создаем rootReducer
 export const rootReducer = combineReducers ({
   ingredients: ingridientReducer,
   constructorIngredients: ingridientConstructorReducer,
   currentIngredient: currentIngridientReducer,
-  orderPrice: orderPriceReducer
+  orderPrice: orderPriceReducer,
+  orderNumber: postOrderRuduser
 })
