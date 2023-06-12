@@ -1,15 +1,17 @@
 import styles from "./order-details.module.css";
 import done from "./../../images/done.png"
-import { BurgerOrderContext } from "../../services/burgerContext";
-import { useContext } from "react";
+//import { BurgerOrderContext } from "../../services/burgerContext";
+//import { useState } from "react";
+import { useSelector } from "react-redux";
 
 
 function OrderDetails() {
-const burgerOrder = useContext(BurgerOrderContext)
-
+  const order = useSelector(state => state.orderNumber.postOrderNumber)
+//const burgerOrder = useContext(BurgerOrderContext)
+//const [order, setOrder] = useState()
   return (
     <div className={styles.container}>
-      <p className="text text_type_digits-large mb-8">{burgerOrder}</p>
+      <p className="text text_type_digits-large mb-8">{order}</p>
       <p className="text text_type_main-medium mb-15">идентификатор заказа</p>
       <div className={styles.check}>
         <img src={done} alt="done" className={styles.icon}/>

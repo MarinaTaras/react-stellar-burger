@@ -1,7 +1,9 @@
 const INGREDIENTS = 'https://norma.nomoreparties.space/api/ingredients'
 //проверка запросов сервера
-const checkReponse = (res) => {
-  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+const checkResponse = (res) => {
+  return res.ok 
+  ? res.json().then((res) => Promise.resolve(res)) 
+  : res.json().then((err) => Promise.reject(err));
 };
 
 function getIngredients() {
@@ -10,7 +12,7 @@ function getIngredients() {
     method: 'GET',
     headers: {'Content-Type': 'application/json'}
   })
-    .then(checkReponse)
+    .then(checkResponse)
 }
 
 export default getIngredients
