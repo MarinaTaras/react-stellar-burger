@@ -7,13 +7,12 @@ import { ingridientDetailsPropType } from '../../utils/prop-types';
 
 
 function IngredientDetails({ data }) {
-  
   return (
 
     <div className={styles.container}>
       <p className={`${styles.title} text text_type_main-large`}>Детали ингридиента</p>
       <img className={styles.image} src={data.image_large} alt="ингридиент" />
-      <p className={`${styles.discription} text text_type_main-medium`}>{data.name}</p>
+      <p className={`${styles.discription} text text_type_main-medium`}>{data.name || ''}</p>
       <ul className={styles.info}>
         <li className={styles.value}>
           <p className="text text_type_main-default text_color_inactive">

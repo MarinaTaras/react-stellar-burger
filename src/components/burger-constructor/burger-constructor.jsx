@@ -15,6 +15,9 @@ import { CALC_ORDER_PRICE, SORT_ITEMS } from "../../services/actions/actions";
 import { useDrop } from "react-dnd";
 import { ConstructorItem } from "../constructor-item/constructor-item";
 import { postOrderRequest } from "../../services/actions/api-actions";
+import { getCookie } from "../../utils/get-cookie";
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { authReducer } from "../../services/reducers/auth-reduser";
 
 function BurgerConstructor({ onDropHandler }) {
 
@@ -22,7 +25,12 @@ function BurgerConstructor({ onDropHandler }) {
   const items = useSelector(state => state.constructorIngredients);
   const totalPrice = useSelector(state => state.orderPrice)
   //const [order, setOrder] = useState()
+  const cookie = getCookie('token');
+  const navigate = useNavigate
+  const user = useSelector((state) => state.authReducer.user);
+  const location = useLocation();
 
+  console.log('user', user)
   //реализация перетаскивания
   const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredient",
@@ -44,14 +52,15 @@ function BurgerConstructor({ onDropHandler }) {
 
 
   function submitOrderNumber() {
-    const idArr = items.map(item => item._id)
-    dispatch(postOrderRequest(idArr))
-    // getOrder(idArr).then((res) => {
-    //   setOrder(res.order.number)
-    //   setVisible(true)
-    // })
-    setVisible(true)
-    //setOrder()
+    if (user === null) { return (
+          <Navigate to="/login" replace={true} />
+        )}
+    else {
+      const idArr = items.map(item => item._id)
+      return (
+        dispatch(postOrderRequest(idArr)),
+        setVisible(true))
+    }
   }
 
   //находим булку из data.js

@@ -7,8 +7,6 @@ import {
   POST_ORDER_FAILED, POST_ORDER_REQUEST, POST_ORDER_SUCCESS,
 } from "./actions"
 
-
-
 export function ingredientsRequest() {
   return function (dispatch) {
     dispatch({
