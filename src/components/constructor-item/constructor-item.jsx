@@ -3,7 +3,7 @@ import styles from "./constructor-item.module.css";
 import { CHANGE_COUNT, REMOVE_INGRIDIENT } from "../../services/actions/actions";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 
 export function ConstructorItem({ ingredientItem, moveHandler }) {
@@ -15,7 +15,7 @@ export function ConstructorItem({ ingredientItem, moveHandler }) {
   const store = useStore()
   const dispatch = useDispatch()
   const itemIndex = ingredientItem?._id || null
-  
+
   const ref = useRef(null);
   const [, dragRef] = useDrag({
     type: "item",
@@ -32,18 +32,18 @@ export function ConstructorItem({ ingredientItem, moveHandler }) {
     }),
     hover(item, monitor) {
       if (!ref.current) return;
-      
+
       const dragIndex = item.index;
       const hoverIndex = index;
-      
+
       if (dragIndex === hoverIndex) return;
-      
+
       // нахождение области на экране
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
       // нахождение вертикальной середины
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      
+
 
       const clientOffset = monitor.getClientOffset();
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
@@ -59,7 +59,7 @@ export function ConstructorItem({ ingredientItem, moveHandler }) {
       item.index = hoverIndex;
     }
   });
-  
+
   const DnDRef = dragRef(dropRef(ref));
 
   // удаление ингридиента

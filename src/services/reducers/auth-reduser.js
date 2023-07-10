@@ -23,13 +23,11 @@ const initialState = { user: null, isAuthChecked: false, loading: false, errors:
 
 export const authReducer = (state = initialState, action) => {
 
-  console.log('Action', action, state)
   switch (action.type) {
     case POST_REGISTER_REQUEST: {
       return { ...state, loading: true, errors: null };
     }
     case POST_REGISTER_SUCCESS: {
-      console.log('data', action.data)
       const name = action.data.user.name
       const email = action.data.user.email
       return { ...state, user: { name, email }, isAuthChecked: true }

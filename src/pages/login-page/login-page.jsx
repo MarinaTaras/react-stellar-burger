@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link, Redirect, useLocation, useNavigate } from 'react-router-dom';
-import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './login-page.module.css';
 import postLogin from '../../utils/login-api';
 import { POST_LOGIN_SUCCESS } from '../../services/actions/auth-actions';
 
 function LoginPage() {
-  
+
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const [form, setValue] = useState({ email: '', password: '' });
@@ -19,20 +19,21 @@ function LoginPage() {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  function onBtnClick() {
+  function onLoginClick(e) {
+    e.preventDefault()
     postLogin(form)
       .then((data) => dispatch({ type: POST_LOGIN_SUCCESS, data }))
       .then((res) => (
         localStorage.setItem("accessToken", res.data.accessToken),
         localStorage.setItem("refreshToken", res.data.refreshToken)
-        ))
+      ))
       .then(() => navigate('/', { replace: true }))
       .catch(e => console.log('ошибка', e))
   }
 
   return (
     <div className={styles.wrapper}>
-      <form className={styles.form} >
+      <form className={styles.form} onSubmit={onLoginClick} >
         <h2 className="text text_type_main-medium">
           Вход
         </h2>
@@ -40,7 +41,7 @@ function LoginPage() {
           <EmailInput name={'email'} placeholder={'E-mail'} onChange={onInputChange} value={form.email} error={false} size={'default'} isIcon={false} />
           <PasswordInput name={'password'} placeholder={'Пароль'} onChange={onInputChange} value={form.password} error={false} size={'default'} extraClass="mb-2" />
         </fieldset>
-        <Button onClick={onBtnClick} htmlType="button" width={'253px'} type="primary" size="medium"> Войти </Button>
+        <Button htmlType="submit" width={'253px'} type="primary" size="medium"> Войти </Button>
       </form>
       <div className={styles.navigation}>
         <div className={styles.additional}>

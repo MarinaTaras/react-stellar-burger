@@ -5,9 +5,9 @@ import { fetchWithRefresh } from "./token-api";
 const USER_HTTP = 'https://norma.nomoreparties.space/api/auth/user'
 //проверка запросов сервера
 const checkReponse = (res) => {
-    return res.success 
-            ? Promise.resolve(res.user)
-            : Promise.reject()
+  return res.success
+    ? Promise.resolve(res.user)
+    : Promise.reject()
 };
 
 export const setAuthChecked = (value) => ({
@@ -28,7 +28,7 @@ export const getUser = () => {
       "Content-Type": "application/json;charset=utf-8",
     },
   })
-  .then(checkReponse)
+    .then(checkReponse)
 }
 //обновление данных о пользователе
 export const patchUser = ({ name, email, password }) => {
@@ -45,22 +45,20 @@ export const patchUser = ({ name, email, password }) => {
 };
 
 export const checkUserAuth = () => {
-    return (dispatch) => {
-        if (localStorage.getItem("accessToken")) {
-            //dispatch(getUser())
-            getUser()
-              .then((res) => {
-                dispatch(setUser(res));
-                dispatch(setAuthChecked(true))
-              })
-              .catch((err) => {
-                  console.log('ОШИБКА В getUser', err)
-                  localStorage.removeItem("accessToken");
-                  localStorage.removeItem("refreshToken");
-                  dispatch(setUser(null));
-               })
-        } else {
-            dispatch(setAuthChecked(true));
-        }
-    };
+  return (dispatch) => {
+    if (localStorage.getItem("accessToken")) {
+      getUser()
+        .then((res) => {
+          dispatch(setUser(res));
+          dispatch(setAuthChecked(true))
+        })
+        .catch((err) => {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          dispatch(setUser(null));
+        })
+    } else {
+      dispatch(setAuthChecked(true));
+    }
+  };
 };

@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, Redirect, useLocation, NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './profile-page.module.css';
-import { authReducer } from '../../services/reducers/auth-reduser';
 import { PATCH_USER_SUCCESS } from '../../services/actions/auth-actions';
 import { patchUser, setUser } from '../../utils/user-api';
 import { postLogout, signOut } from '../../utils/logout-api';
@@ -31,7 +30,8 @@ function ProfilePage() {
     })
   }
 
-  function onBtnClick() {
+  function onProfileClick(e) {
+    e.preventDefault()
     patchUser(form)
       .then((data) => dispatch({ type: PATCH_USER_SUCCESS, data }))
       //.then((res) => (dispatch(setUser(res.user))))
@@ -43,7 +43,6 @@ function ProfilePage() {
     postLogout()
       .then(res => {
         if (res && res.success) {
-          console.log('noooo')
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken")
         }
@@ -84,17 +83,17 @@ function ProfilePage() {
         </div>
       </div>
       <div className={styles.edit}>
-        <form className={styles.form} >  {/* onSubmit={submitForm} */}
+        <form className={styles.form} onSubmit={onProfileClick} autoComplete="on">
           <fieldset className={styles.form_fieldset}>
-            <Input name={'name'} placeholder={'Имя'} onChange={onInputChange} value={form.name} error={false} size={'default'} extraClass="mb-2" icon={'EditIcon'} />
-            <EmailInput name={'email'} placeholder={'Логин'} onChange={onInputChange} value={form.email} error={false} size={'default'} extraClass="mb-2" icon={'EditIcon'} />
-            <PasswordInput type='password' name={'password'} placeholder={'Пароль'} onChange={onInputChange} value={form.password} error={false} size={'default'} extraClass="mb-2" icon={'EditIcon'} />
+            <Input name={'name'} placeholder={'Имя'} autoComplete="name" onChange={onInputChange} value={form.name} error={false} size={'default'} extraClass="mb-2" icon={'EditIcon'} />
+            <EmailInput name={'email'} placeholder={'Логин'} autoComplete="email" onChange={onInputChange} value={form.email} error={false} size={'default'} extraClass="mb-2" icon={'EditIcon'} />
+            <PasswordInput type='password' name={'password'} autoComplete="current-password" placeholder={'Пароль'} onChange={onInputChange} value={form.password} error={false} size={'default'} extraClass="mb-2" icon={'EditIcon'} />
           </fieldset>
           <div className={styles.buttons}>
             <Button htmlType="button" type="secondary" size="medium" onClick={onResetForm}>
               Oтмена
             </Button>
-            <Button htmlType="button" onClick={onBtnClick} disabled={!form.password} type="primary" size="medium">
+            <Button htmlType="submit" disabled={!form.password} type="primary" size="medium">
               Сохранить
             </Button>
           </div>

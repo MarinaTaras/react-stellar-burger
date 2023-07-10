@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link, Redirect, useLocation, useNavigate } from 'react-router-dom';
-import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './forgotpassword-page.module.css';
 import postForgot from '../../utils/forgot-api';
@@ -16,7 +15,8 @@ function ForgotpasswordPage() {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  function onBtnClick() {
+  function onForgotClick(e) {
+    e.preventDefault()
     postForgot(form)
       .then(() => navigate('/reset-password', { replace: true }))
       .catch(e => console.log('ошибка', e))
@@ -24,14 +24,14 @@ function ForgotpasswordPage() {
 
   return (
     <div className={styles.wrapper}>
-      <form className={styles.form} >
+      <form className={styles.form} onSubmit={onForgotClick}>
         <h2 className="text text_type_main-medium">
           Восстановление пароля
         </h2>
         <fieldset className={styles.form_fieldset}>
           <EmailInput name={'email'} placeholder={'Укажите e-mail'} onChange={onEmailChange} value={form.email} error={false} size={'default'} isIcon={false} />
         </fieldset>
-        <Button onClick={onBtnClick} htmlType="button" width={'196px'} type="primary" size="medium"> Восстановить </Button>
+        <Button htmlType="submit" width={'196px'} type="primary" size="medium"> Восстановить </Button>
       </form>
       <div className={styles.navigation}>
         <div className={styles.additional}>

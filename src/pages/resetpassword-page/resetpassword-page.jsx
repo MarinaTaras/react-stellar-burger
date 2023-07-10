@@ -16,16 +16,16 @@ function ResetpasswordPage() {
     setValue({ ...form, [e.target.name]: e.target.value });
   }
 
-  function onBtnClick() {
+  function onResetClick(e) {
+    e.preventDefault()
     postReset(form)
-    .then((res) => console.log('успех', res) )
+    .then((res) => navigate('/login', { replace: true }))
     .catch(e => console.log('ошибка', e) )
-    //navigate('/reset-password', { replace: true }))
   }
 
   return (
     <div className={styles.wrapper}>
-      <form className={styles.form} >
+      <form className={styles.form} onSubmit={onResetClick} >
         <h2 className="text text_type_main-medium">
           Восстановление пароля
         </h2>
@@ -33,7 +33,7 @@ function ResetpasswordPage() {
           <PasswordInput name={'password'} placeholder={'Введите новый пароль'} onChange={onInputChange} value={form.password} error={false} size={'default'} extraClass="mb-2" />
           <Input name={'token'} placeholder={'Введите код из письма'} onChange={onInputChange} value={form.token} error={false} size={'default'} extraClass="ml-1" />
         </fieldset>
-        <Button onClick={onBtnClick} htmlType="button" width={'167px'} type="primary" size="medium"> Сохранить </Button>
+        <Button htmlType="submit" width={'167px'} type="primary" size="medium"> Сохранить </Button>
       </form>
       <div className={styles.additional}>
         <p className="text text_type_main-default text_color_inactive "> Вспомнили пароль? </p>

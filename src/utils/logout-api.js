@@ -1,7 +1,4 @@
 
-import { deleteCookie } from "./get-cookie";
-import { setUser } from "./user-api";
-
 // Эндпоинт для создания пользователя
 const LOGOUT_HTTP = 'https://norma.nomoreparties.space/api/auth/logout'
 //проверка запросов сервера
@@ -22,21 +19,10 @@ export function postLogout() {
       token: localStorage.getItem('refreshToken')
     })
   })
-  .then(console.log('fffff'))
     .then(checkReponse)
 
 }
 
-// export function signOut() {
-//   postLogout()
-//     .then(res => {
-//       if (res && res.success) {
-//         console.log('noooo')
-//         localStorage.removeItem("accessToken");
-//         localStorage.removeItem("refreshToken")
-//       }
-//     })
 
-// }
 
 
