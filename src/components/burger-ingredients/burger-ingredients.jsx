@@ -4,19 +4,13 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import Ingredient from "../ingridient/ingridient";
 import { ingredientPropType } from "../../utils/prop-types";
 import PropTypes from "prop-types";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import Modal from "../modal/modal";
-//import { BurgerIngredientsContext } from "../../services/burgerContext";
 import { useInView } from 'react-intersection-observer';
 import { useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 
 function BurgerIngredients() {
+  const location = useLocation();
   const { items, loading, errors } = useSelector(state => state.ingredients)
- // const items = useContext(BurgerIngredientsContext)
-  //const [current, setCurrent] = React.useState(['buns']);
-  // const bun = "bun";
-  // const sauce = "sauce";
-  // const main = "main";
 
   //булки из data.js
   const buns = items.filter(item => item.type === "bun");
@@ -26,7 +20,7 @@ function BurgerIngredients() {
 
   //начинки из data.js
   const fillings = items.filter(item => item.type === "main");
-const [current, setCurrent] = React.useState(['buns']);
+  const [current, setCurrent] = React.useState(['buns']);
 
   const [bunsRef, bunsInView] = useInView({
     threshold: 0.25
@@ -39,7 +33,7 @@ const [current, setCurrent] = React.useState(['buns']);
   });
 
   const onTabScroll = type => setCurrent(type)
- 
+
 
   const handleIngredientScroll = () => {
     switch (true) {
@@ -67,8 +61,12 @@ const [current, setCurrent] = React.useState(['buns']);
     return (
       <>
         {items.map((item) => {
+          const ingredientId = item._id
           return (
+
             <Ingredient data={item} key={item._id} />
+
+
           )
         })}
       </>

@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import styles from "./burger-constructor.module.css";
 import {
   ConstructorElement, CurrencyIcon, Button
@@ -8,13 +8,13 @@ import { ingredientPropType } from "../../utils/prop-types";
 import PropTypes from "prop-types";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-//import { BurgerIngredientsContext, BurgerOrderContext } from "../../services/burgerContext";
-//import getOrder from "../../utils/order-api";
 import { useDispatch, useSelector } from "react-redux";
 import { CALC_ORDER_PRICE, SORT_ITEMS } from "../../services/actions/actions";
 import { useDrop } from "react-dnd";
 import { ConstructorItem } from "../constructor-item/constructor-item";
 import { postOrderRequest } from "../../services/actions/api-actions";
+import { getCookie } from "../../utils/get-cookie";
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function BurgerConstructor({ onDropHandler }) {
 
@@ -22,6 +22,10 @@ function BurgerConstructor({ onDropHandler }) {
   const items = useSelector(state => state.constructorIngredients);
   const totalPrice = useSelector(state => state.orderPrice)
   //const [order, setOrder] = useState()
+  const cookie = getCookie('token');
+  const navigate = useNavigate()
+  const user = useSelector((state) => state.authReducer.user);
+  const location = useLocation();
 
   //реализация перетаскивания
   const [{ isHover }, dropTarget] = useDrop({
@@ -44,14 +48,13 @@ function BurgerConstructor({ onDropHandler }) {
 
 
   function submitOrderNumber() {
+
+    if (!user) return navigate("/login", { replace: true });
+
     const idArr = items.map(item => item._id)
     dispatch(postOrderRequest(idArr))
-    // getOrder(idArr).then((res) => {
-    //   setOrder(res.order.number)
-    //   setVisible(true)
-    // })
     setVisible(true)
-    //setOrder()
+
   }
 
   //находим булку из data.js
