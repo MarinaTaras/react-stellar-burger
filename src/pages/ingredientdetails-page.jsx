@@ -1,17 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
 import { useParams } from "react-router-dom";
-import { ingredientsRequest } from "../services/actions/api-actions";
-import { useEffect } from "react";
 
 function IngredientDetailsPage() {
   const dispatch = useDispatch() 
   const { ingredientId } = useParams()
   const { items } = useSelector(state => state.ingredients);
 
-  useEffect(() => {
-    if (!items.length) dispatch(ingredientsRequest())
-  }, [])
 // в момент, когда данных нет, не выдает ошибку:
   const emptyItem = {
     type: '',

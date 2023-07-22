@@ -20,6 +20,7 @@ import EditProfile from "../edit-profile/edit-profile";
 import OrdersHistory from "../orders-history/orders-history";
 import AuthOrdersHistory from "../auth_orders-history/auth_orders-history";
 import AuthOrderInfo from "../../pages/auth_orderinfo-page/auth_orderinfo-page";
+import { ingredientsRequest } from "../../services/actions/api-actions";
 
 function App() {
 
@@ -34,10 +35,13 @@ function App() {
     navigate(-1);
   };
 
-
   useEffect(() => {
     dispatch(checkUserAuth());
   }, []);
+
+  useEffect(() => {
+    dispatch(ingredientsRequest())
+  }, [])
 
   return (
     <div className={styles.app}>
@@ -74,7 +78,7 @@ function App() {
               path='/feed/:id'
               element={
                 <Modal onClose={handleModalClose}>
-                  <AuthOrderInfo />
+                  <OrderInfo />
                 </Modal>
               }
             />

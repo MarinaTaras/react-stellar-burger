@@ -8,7 +8,7 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import OrdersHistory from '../../components/orders-history/orders-history';
 import OrdersCount from '../../components/orders-count/orders-count';
-import { wsConnect } from '../../services/actions/feed-actions';
+import { wsConnect, wsDisconnect } from '../../services/actions/feed-actions';
 import { wsUrl } from '../../services/store';
 //import { state } from '../../services/state';
 import { feedReducer } from '../../services/reducers/feed-reduser';
@@ -22,7 +22,8 @@ function OrderFeedPage() {
 
   useEffect(() => {
     dispatch(wsConnect(wsUrl))
-  }, []);
+    return () => dispatch(wsDisconnect())
+  }, [dispatch]);
 
   const orders = useSelector((state) => state.feedReducer);
 

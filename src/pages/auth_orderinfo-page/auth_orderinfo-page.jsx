@@ -4,9 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './auth_orderinfo-page.module.css'
 import IngredientsInfo from '../../components/ingredients-info/ingredients-info';
-import { ingredientsRequest } from '../../services/actions/api-actions';
-import { feedReducer } from '../../services/reducers/feed-reduser';
-import { authConnect } from '../../services/actions/feed_auth-actions';
+import { authConnect, authDisconnect } from '../../services/actions/feed_auth-actions';
 import { wsAuthUrl } from '../../services/store';
 
 function AuthOrderInfo() {
@@ -18,7 +16,9 @@ function AuthOrderInfo() {
   const accessToken = localStorage.getItem("accessToken")?.slice(7);
   useEffect(() => {
     dispatch(authConnect(`${wsAuthUrl}?tokeng=${accessToken}`))
+    return () => dispatch(authDisconnect())
   }, []);
+
   //все заказы
   const orders = useSelector((state) => state.feedAuthReducer.orders);
   const { id } = useParams()

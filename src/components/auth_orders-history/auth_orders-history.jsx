@@ -5,7 +5,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import styles from './auth_orders-history.module.css'
 import OrderContents from '../order-contents/order-contents';
-import { authConnect } from '../../services/actions/feed_auth-actions';
+import { authConnect, authDisconnect } from '../../services/actions/feed_auth-actions';
 import { wsAuthUrl } from '../../services/store';
 
 
@@ -22,8 +22,8 @@ function AuthOrdersHistory() {
   // подключаем ws
   useEffect(() => {
     dispatch(authConnect(`${wsAuthUrl}?tokeng=${accessToken}`))
+    return () => dispatch(authDisconnect())
   }, []);
-
   // находим заказы пользователя
   const orders = useSelector((state) => state.feedAuthReducer.orders);
 

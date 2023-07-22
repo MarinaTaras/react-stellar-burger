@@ -4,19 +4,20 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './orderinfo-page.module.css'
 import IngredientsInfo from '../../components/ingredients-info/ingredients-info';
-import { ingredientsRequest } from '../../services/actions/api-actions';
-import { feedReducer } from '../../services/reducers/feed-reduser';
 import { wsUrl } from '../../services/store';
-import { wsConnect } from '../../services/actions/feed-actions';
+import { wsConnect, wsDisconnect } from '../../services/actions/feed-actions';
 
 function OrderInfo() {
   const dispatch = useDispatch()
-  useEffect(() => {
+
+ useEffect(() => {
     dispatch(wsConnect(wsUrl))
-  }, []);
+    return () => dispatch(wsDisconnect())
+  }, [dispatch]);
+
   //все заказы
   const orders = useSelector((state) => state.feedReducer.orders);
- 
+ console.log('orders', orders)
   const { id } = useParams()
   // в момент, когда данных нет, не выдает ошибку:
   const emptyItem = {

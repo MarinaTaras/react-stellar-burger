@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styles from "./home-page.module.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { ingredientsRequest } from "../../services/actions/api-actions";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { ADD_CONSTRUCTOR_INGRIDIENT, CHANGE_COUNT } from "../../services/actions/actions";
@@ -16,11 +15,6 @@ function HomePage() {
   const dispatch = useDispatch()
   const store = useStore()
   const { items, loading, errors } = useSelector(state => state.ingredients);
-
-  // запрос к Api при монтировании App
-  useEffect(() => {
-    dispatch(ingredientsRequest())
-  }, [])
 
   // реализация перетаскивания
   const handleDrop = (data) => {
