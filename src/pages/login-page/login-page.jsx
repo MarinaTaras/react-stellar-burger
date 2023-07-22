@@ -21,12 +21,15 @@ function LoginPage() {
 
   function onLoginClick(e) {
     e.preventDefault()
+    
     postLogin(form)
-      .then((data) => dispatch({ type: POST_LOGIN_SUCCESS, data }))
-      .then((res) => (
-        localStorage.setItem("accessToken", res.data.accessToken),
-        localStorage.setItem("refreshToken", res.data.refreshToken)
-      ))
+      .then((data) => {
+        dispatch({ type: POST_LOGIN_SUCCESS, data })
+        return data})
+      .then((data) => {
+        localStorage.setItem("accessToken", data.accessToken)
+        localStorage.setItem("refreshToken", data.refreshToken)
+        })
       .then(() => navigate('/', { replace: true }))
       .catch(e => console.log('ошибка', e))
   }

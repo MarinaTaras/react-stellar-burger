@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate, useParams } from "react-router-dom";
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import { useEffect } from "react";
@@ -14,6 +14,12 @@ import { OnlyAuth, OnlyUnAuth } from "../protected-route-element/protected-route
 import { checkUserAuth } from "../../utils/user-api";
 import Modal from "../modal/modal";
 import IngredientDetailsPage from "../../pages/ingredientdetails-page";
+import OrderFeedPage from "../../pages/orderfeed-page/orderfeed-page";
+import OrderInfo from "../../pages/orderinfo-page/orderinfo-page";
+import EditProfile from "../edit-profile/edit-profile";
+import OrdersHistory from "../orders-history/orders-history";
+import AuthOrdersHistory from "../auth_orders-history/auth_orders-history";
+import AuthOrderInfo from "../../pages/auth_orderinfo-page/auth_orderinfo-page";
 
 function App() {
 
@@ -39,9 +45,15 @@ function App() {
         <AppHeader />
         <Routes location={background || location}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/feed" element={<OrderFeedPage />} />
+          <Route path="/feed/:id" element={<OrderInfo />} />
           <Route path="/register" element={<OnlyUnAuth component={<RegistrationPage />} />} />
           <Route path="/login" element={<OnlyUnAuth component={<LoginPage />} />} />
-          <Route path="/profile" element={<OnlyAuth component={<ProfilePage />} />} />
+          <Route path="/profile" element={<OnlyAuth component={<ProfilePage />} />} >
+            <Route path="profile" element={<EditProfile />} />
+            <Route path="orders" element={<AuthOrdersHistory />} />
+          </Route >
+          <Route path="/profile/orders/:id" element={<OnlyAuth component={<AuthOrderInfo />} />} />
           <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotpasswordPage />} />} />
           <Route path="/reset-password" element={<OnlyUnAuth component={<ResetpasswordPage />} />} />
           <Route path='/ingredients/:ingredientId' element={<IngredientDetailsPage />} />
@@ -55,6 +67,22 @@ function App() {
               element={
                 <Modal onClose={handleModalClose}>
                   <IngredientDetailsPage />
+                </Modal>
+              }
+            />
+            <Route
+              path='/feed/:id'
+              element={
+                <Modal onClose={handleModalClose}>
+                  <AuthOrderInfo />
+                </Modal>
+              }
+            />
+            <Route
+              path='/profile/orders/:id'
+              element={
+                <Modal onClose={handleModalClose}>
+                  <AuthOrderInfo />
                 </Modal>
               }
             />

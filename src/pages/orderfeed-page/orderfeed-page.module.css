@@ -1,0 +1,32 @@
+
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 1240px;
+  margin: 40px auto 0px;
+  gap: 20px;
+}
+
+.container {
+display: flex;
+gap: 60px;
+}
+
+.section_history {
+  display: flex;
+  width: 608px;
+  height: 852px;
+}
+
+.section_count {
+  display: flex;
+  width: 580px;
+  height: 626px;
+}
+
+.text {
+	width: 100%;
+	text-align: left;
+}

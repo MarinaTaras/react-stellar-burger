@@ -1,49 +1,41 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { NavLink, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch, Provider } from 'react-redux';
+import { NavLink, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './profile-page.module.css';
 import { PATCH_USER_SUCCESS } from '../../services/actions/auth-actions';
 import { patchUser, setUser } from '../../utils/user-api';
 import { postLogout, signOut } from '../../utils/logout-api';
+import { initStore, wsAuthUrl } from '../../services/store'
+import { authConnect } from '../../services/actions/feed_auth-actions';
+import EditProfile from '../../components/edit-profile/edit-profile';
+import OrderContents from '../../components/order-contents/order-contents';
+import OrdersHistory from '../../components/orders-history/orders-history';
 
 function ProfilePage() {
+  const location = useLocation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector((state) => state.authReducer.user);
+  const background = location.state?.background;
+  //находим токен, отрезаем Bearer
+  const accessToken = localStorage.getItem("accessToken")?.slice(7);
 
-  const [form, setValue] = useState({ name: user.name, email: user.email, password: '' });
+  // подключаем ws
+  useEffect(() => {
+    dispatch(authConnect(`${wsAuthUrl}?token=${accessToken}`))
+  }, []);
 
-  const onInputChange = e => {
-    e.preventDefault();
-    setValue({ ...form, [e.target.name]: e.target.value });
-  };
+  // находим заказы пользователя
+  const orders = useSelector((state) => state.feedAuthReducer);
 
-  const onResetForm = (e) => {
-    e.preventDefault();
-    setValue({
-      ...form,
-      name: '',
-      email: '',
-      password: '',
-    })
-  }
-
-  function onProfileClick(e) {
-    e.preventDefault()
-    patchUser(form)
-      .then((data) => dispatch({ type: PATCH_USER_SUCCESS, data }))
-      //.then((res) => (dispatch(setUser(res.user))))
-      .then(() => navigate('/', { replace: true }))
-      .catch(e => console.log('ошибка', e))
-  }
 
   function onLogOut() {
     postLogout()
       .then(res => {
         if (res && res.success) {
-          localStorage.removeItem("accessToken");
+          localStorage.removeItem("accessToken")
           localStorage.removeItem("refreshToken")
         }
       })
@@ -54,18 +46,17 @@ function ProfilePage() {
 
   return (
     <div className={styles.wrapper}>
+      {/* панель навигации */}
       <div className={styles.navigate}>
         <nav className={styles.navpanel}>
           <NavLink className={({ isActive }) => (
-            isActive ? `${styles.linkActive} ${styles.navlink} text text_type_main-medium`
+            isActive ? `${styles.linkActive} ${styles.link} text text_type_main-medium`
               : `${styles.link} ${styles.navlink} text text_type_main-medium text_color_inactive `
-          )} to="/profile">
-            <p>
-              Профиль
-            </p>
+          )} to="/profile/profile">
+            <p>Профиль</p>
           </NavLink>
           <NavLink className={({ isActive }) => (
-            isActive ? `${styles.linkActive} ${styles.navlink} text text_type_main-medium`
+            isActive ? `${styles.linkActive} ${styles.link} text text_type_main-medium`
               : `${styles.link} ${styles.navlink} text text_type_main-medium text_color_inactive `
           )} to='/profile/orders'>
             <p>История заказов</p>
@@ -82,7 +73,8 @@ function ProfilePage() {
           <p>В этом разделе вы можете изменить свои персональные данные</p>
         </div>
       </div>
-      <div className={styles.edit}>
+      {/* страницы пользователя */}
+      {/* <div className={styles.edit}>
         <form className={styles.form} onSubmit={onProfileClick} autoComplete="on">
           <fieldset className={styles.form_fieldset}>
             <Input name={'name'} placeholder={'Имя'} autoComplete="name" onChange={onInputChange} value={form.name} error={false} size={'default'} extraClass="mb-2" icon={'EditIcon'} />
@@ -98,8 +90,17 @@ function ProfilePage() {
             </Button>
           </div>
         </form>
-      </div>
+      </div> */}
 
+      <div>
+        <Outlet />
+      
+        {/* <Routes location={background || location}>
+          <Route path="/profile" element={<EditProfile />} />
+          <Route path="/profile/orders" element={<OrdersHistory />}  />
+          <Route path='/profile/orders/:id' element={<OrderContents  />} />
+        </Routes> */}
+      </div>
     </div>
   )
 }
