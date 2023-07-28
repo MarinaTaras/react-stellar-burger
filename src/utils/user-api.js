@@ -4,7 +4,7 @@ import { fetchWithRefresh } from "./token-api";
 // Эндпоинт для авторизации пользователя
 const USER_HTTP = 'https://norma.nomoreparties.space/api/auth/user'
 //проверка запросов сервера
-const checkReponse = (res) => {
+const checkResponse = (res) => {
   return res.success
     ? Promise.resolve(res.user)
     : Promise.reject()
@@ -28,7 +28,7 @@ export const getUser = () => {
       "Content-Type": "application/json;charset=utf-8",
     },
   })
-    .then(checkReponse)
+    .then(checkResponse)
 }
 //обновление данных о пользователе
 export const patchUser = ({ name, email, password }) => {

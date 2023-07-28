@@ -63,10 +63,7 @@ function BurgerIngredients() {
         {items.map((item) => {
           const ingredientId = item._id
           return (
-
             <Ingredient data={item} key={item._id} />
-
-
           )
         })}
       </>

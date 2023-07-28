@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 640px;
+  height: 620px;
+  margin: 122px auto 0;
+}
+
+.order_number {
+  align-self: center;
+}
+
+.order_info {
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+}
+
+

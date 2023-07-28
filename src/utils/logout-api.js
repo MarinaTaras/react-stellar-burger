@@ -2,7 +2,7 @@
 // Эндпоинт для создания пользователя
 const LOGOUT_HTTP = 'https://norma.nomoreparties.space/api/auth/logout'
 //проверка запросов сервера
-const checkReponse = (res) => {
+const checkResponse = (res) => {
   return res.ok
     ? res.json().then((res) => Promise.resolve(res))
     : res.json().then((err) => Promise.reject(err))
@@ -19,7 +19,7 @@ export function postLogout() {
       token: localStorage.getItem('refreshToken')
     })
   })
-    .then(checkReponse)
+    .then(checkResponse)
 
 }
 

@@ -1,7 +1,7 @@
 // Эндпоинт для создания пользователя
 const REGISTER_HTTP = 'https://norma.nomoreparties.space/api/auth/register'
 //проверка запросов сервера
-const checkReponse = (res) => {
+const checkResponse = (res) => {
   return res.ok
     ? res.json().then((res) => Promise.resolve(res))
     : res.json().then((err) => Promise.reject(err))
@@ -18,7 +18,7 @@ function postRegister({ email, password, name }) {
       "name": `${name}`
     })
   })
-    .then(checkReponse)
+    .then(checkResponse)
 
 }
 

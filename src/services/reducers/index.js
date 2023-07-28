@@ -5,6 +5,8 @@ import { ingridientConstructorReducer } from './constructor-reduser';
 import { orderPriceReducer } from './order-reducer';
 import { postOrderRuduser } from './post-order-reduser';
 import { authReducer } from './auth-reduser';
+import { feedAuthReducer } from './feed_auth-reduser';
+import { feedReducer } from './feed-reduser';
 
 //создаем rootReducer
 export const rootReducer = combineReducers ({
@@ -13,5 +15,7 @@ export const rootReducer = combineReducers ({
   currentIngredient: currentIngridientReducer,
   orderPrice: orderPriceReducer,
   orderNumber: postOrderRuduser,
-  authReducer: authReducer
+  authReducer: authReducer,
+  feedReducer: feedReducer,
+  feedAuthReducer: feedAuthReducer
 })

@@ -10,7 +10,7 @@ function AppHeader() {
       ? `${headerStyle.nav_link} ${headerStyle.nav_link_active} text_type_main-default pl-2`
       : `${headerStyle.nav_link} text_type_main-default  text_color_inactive pl-2`;
   const linkToHome = useMatch("/");
-  const linkToOrder = useMatch("/orders");
+  const linkToFeed = useMatch("/feed");
   return (
     <div className={headerStyle.header}>
       <div className={headerStyle.nav_links}>
@@ -22,8 +22,8 @@ function AppHeader() {
           )}
           Конструктор
         </NavLink>
-        <NavLink to={{ pathname: "/orders" }} className={style}>
-          {linkToOrder ? (
+        <NavLink to={{ pathname: "/feed" }} className={style}>
+          {linkToFeed ? (
             <ListIcon type={"primary"} />
           ) : (
             <ListIcon type={"secondary"} />
@@ -36,7 +36,7 @@ function AppHeader() {
         <Logo />
       </a>
 
-      <Link className={headerStyle.nav_link} to='/profile'>
+      <Link className={headerStyle.nav_link} to='/profile/profile'>
         <ProfileIcon type="secondary" />
         <p className="text text_type_main-small text_color_inactive">
           Личный кабинет
