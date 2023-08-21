@@ -7,13 +7,13 @@ import { PATCH_USER_SUCCESS } from '../../services/actions/auth-actions';
 import { patchUser } from '../../utils/user-api';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { TState, TUser } from '../../services/types';
+import { TState, TUser, useAppSelector } from '../../services/types';
 
 function EditProfile() {
   const location = useLocation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const user = useSelector((state: TState) => state.auth.user as TUser);
+  const user = useAppSelector((state: TState) => state.auth.user as TUser);
 
   const [form, setValue] = useState({ name: user.name, email: user.email, password: '' });
 

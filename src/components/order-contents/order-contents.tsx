@@ -1,10 +1,10 @@
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import styles from './order-contents.module.css'
 
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
-import { TOrder, TState } from '../../services/types'
+import { TOrder, TState, useAppSelector } from '../../services/types'
 
 type TOrderContentsProps = {
   order: TOrder,
@@ -12,14 +12,13 @@ type TOrderContentsProps = {
 }
 
 function OrderContents({ order, status }: TOrderContentsProps) {
-  const dispatch = useDispatch()
   let orderDate = order.createdAt
   let orderIngredients = order.ingredients
   let orderlength = orderIngredients.length
   let orderPrice = 0
 
   //для поиска картинок ингредиентов находим все ингредиенты
-  const { items } = useSelector(( state: TState ) => state.ingredients)
+  const { items } = useAppSelector(( state: TState ) => state.ingredients)
 
   const getIngredients = () => {
 

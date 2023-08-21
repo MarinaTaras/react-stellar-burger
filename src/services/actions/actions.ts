@@ -71,7 +71,7 @@ export interface IClearIngridientInfoAction {
 
 export interface ICalcOrderPriceAction {
   readonly type: typeof CALC_ORDER_PRICE;
-  readonly data: any
+  readonly data: TIngredient[];
 }
 
 ///
@@ -97,7 +97,7 @@ export interface IGetIngridientsRequestAction {
 
 export interface IGetIngridientsSuccessAction {
   readonly type: typeof GET_INGRIDIENTS_SUCCESS
-  readonly data: any
+  readonly data: TIngredient[]
 }
 
 export interface IGetIngridientsFailedAction {

@@ -5,12 +5,12 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import styles from './orders-history.module.css'
 import OrderContents from '../order-contents/order-contents';
-import { TState } from '../../services/types';
+import { TState, useAppSelector } from '../../services/types';
 
 function OrdersHistory() {
 
   const location = useLocation();
-  const orders = useSelector((state: TState) => state.feed.orders);
+  const orders = useAppSelector((state: TState) => state.feed.orders);
 
   return (
     <div className={`${'custom-scroll'}  ${styles.container}`} >

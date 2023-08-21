@@ -1,13 +1,18 @@
 // Эндпоинт для восстановления пароля
 const RESET_HTTP = 'https://norma.nomoreparties.space/api/password-reset/reset'
 //проверка запросов сервера
-const checkResponse = (res) => {
+const checkResponse = (res: Response) => {
     return res.ok 
   ? res.json().then((res) => Promise.resolve(res))
-  : res.json().then((err) => Promise.reject(err))
+  : res.json().then((err: string) => Promise.reject(err))
 };
 
-function postReset({ password, token }) {
+type TPostResetProps = {
+  password: string, 
+  token: string
+}
+
+function postReset({ password, token }: TPostResetProps) {
 
    return fetch(RESET_HTTP, {
     method: 'POST',

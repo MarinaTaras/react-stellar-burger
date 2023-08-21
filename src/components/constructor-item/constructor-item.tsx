@@ -4,7 +4,7 @@ import { CHANGE_COUNT, REMOVE_INGRIDIENT } from "../../services/actions/actions"
 import { useDispatch, useSelector, useStore } from "react-redux";
 import { XYCoord, useDrag, useDrop } from "react-dnd";
 import { DetailedHTMLProps, LegacyRef, MutableRefObject, ReactElement, useRef } from "react";
-import { TIngredient, TState } from "../../services/types";
+import { AppDispatch, TIngredient, TState, useAppDispatch, useAppSelector } from "../../services/types";
 
 
 type TConstrItem = {
@@ -23,7 +23,7 @@ type refItem = {
 
 export function ConstructorItem({ ingredientItem, moveHandler }: TConstrItem) {
   const id = ingredientItem.key;
-  const ingredients = useSelector((state: TState) => state.constructorIngredients);
+  const ingredients = useAppSelector((state: TState) => state.constructorIngredients);
   const index: number = ingredients.indexOf(ingredientItem);
 
   const store = useStore()
@@ -80,9 +80,14 @@ export function ConstructorItem({ ingredientItem, moveHandler }: TConstrItem) {
 
   const DnDRef = dragRef(dropRef(ref) as ReactElement) as LegacyRef<HTMLDivElement>;
 
+type T = {
+  type: string,
+  data: TIngredient
+}
+
   // удаление ингридиента
   const deleteIngredient = () => {
-    const deliteConstructorIngridient = {
+    const deliteConstructorIngridient: T = {
       type: REMOVE_INGRIDIENT,
       data: ingredientItem
     }

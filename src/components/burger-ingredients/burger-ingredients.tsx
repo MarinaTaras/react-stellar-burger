@@ -5,7 +5,7 @@ import Ingredient from "../ingridient/ingridient";
 import { useInView } from 'react-intersection-observer';
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { TIngredient, TState } from "../../services/types";
+import { TIngredient, TState, useAppSelector } from "../../services/types";
 
 enum INGR {
   BUN = 'bun',
@@ -18,15 +18,15 @@ enum INGR {
 
 function BurgerIngredients() {
   const location = useLocation();
-  const { items } = useSelector((state: TState) => state.ingredients)
+  const { items } = useAppSelector((state: TState) => state.ingredients)
 
-  //булки из data.js
+  //булки 
   const buns = items.filter(item => item.type === INGR.BUN);
 
-  //соусы из data.js
+  //соусы 
   const sauces = items.filter(item => item.type === INGR.SAUCE);
 
-  //начинки из data.js
+  //начинки 
   const fillings = items.filter(item => item.type === INGR.MAIN);
   const [current, setCurrent] = React.useState(INGR.BUNS);
 

@@ -6,10 +6,10 @@ import styles from './orderinfo-page.module.css'
 import IngredientsInfo from '../../components/ingredients-info/ingredients-info';
 import { wsUrl } from '../../services/store';
 import { wsConnect, wsDisconnect } from '../../services/actions/feed-actions';
-import { TOrder, TState } from '../../services/types';
+import { TOrder, TState, useAppDispatch, useAppSelector } from '../../services/types';
 
 function OrderInfo() {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   useEffect((): () => void => {
     dispatch(wsConnect(wsUrl))
@@ -17,7 +17,7 @@ function OrderInfo() {
   }, [dispatch]);
 
   //все заказы
-  const orders = useSelector((state: TState) => state.feed.orders);
+  const orders = useAppSelector((state: TState) => state.feed.orders);
 
   const { id } = useParams()
   // в момент, когда данных нет, не выдает ошибку:

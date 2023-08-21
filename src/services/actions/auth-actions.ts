@@ -30,10 +30,12 @@ export interface IPostRegisterRequestAction {
 
 export interface IPostRegisterSuccessAction {
   readonly type: typeof POST_REGISTER_SUCCESS;
-  readonly user: TUser
-  readonly name: string
-  readonly email: string
-  data: any
+  data: {
+    success: boolean,
+    user: TUser,
+    accessToken: string,
+    refreshToken: string
+  }
 }
 
 export interface IPostRegisterFailedAction {
@@ -46,10 +48,12 @@ export interface IPostLoginRequestAction {
 
 export interface IPostLoginSuccessAction {
   readonly type: typeof POST_LOGIN_SUCCESS;
-  readonly user: TUser
-  readonly name: string
-  readonly email: string
-  data: any
+  data: {
+    success: boolean,
+    user: TUser,
+    accessToken: string,
+    refreshToken: string
+  }
 }
 
 export interface IPostLoginFailedAction {
@@ -62,10 +66,12 @@ export interface IPatchUserRequestAction {
 
 export interface IPatchUserSuccessAction {
   readonly type: typeof PATCH_USER_SUCCESS;
-  readonly user: TUser
-  readonly name: string
-  readonly email: string
-  data: any
+  data: {
+    success: boolean,
+    user: TUser,
+    accessToken: string,
+    refreshToken: string
+  }
 }
 
 export interface IPatchUserFailedAction {

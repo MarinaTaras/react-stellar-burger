@@ -7,7 +7,7 @@ import {
   POST_ORDER_FAILED, POST_ORDER_REQUEST, POST_ORDER_SUCCESS,
 } from "./actions"
 
-import { AppDispatch } from "../types";
+import { AppDispatch, TIngredientId, TOrder, TIngredient } from "../types";
 
 // Типизация экшенов
 
@@ -72,8 +72,7 @@ export function ingredientsRequest() {
   }
 }
 
-export function postOrderRequest(idArr: any) {
-
+export function postOrderRequest(idArr: string[]) {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: POST_ORDER_REQUEST

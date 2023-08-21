@@ -1,15 +1,16 @@
-import { ThunkAction } from 'redux-thunk';
-import { Action, ActionCreator } from 'redux';
-import { ReactNode } from 'react';
-
 import { initStore } from "./store";
 import { rootReducer } from './reducers';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 
-export type RootState = ReturnType<typeof rootReducer>;
-
+//типизация useDispatch
 export type AppDispatch = typeof initStore.dispatch;
 export const useAppDispatch: () => AppDispatch = useDispatch;
+
+//типизация хранилища
+export type RootState = ReturnType<typeof rootReducer>
+
+//типизация useSelector
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export type TState = {
   constructorIngredients: TIngredient[],
@@ -19,8 +20,23 @@ export type TState = {
   feed: TFeed,
   ingredients: TIngredients,
 
-  currentIngredient: any,
-  orderNumber: any,
+  currentIngredient: {
+    item: {
+      calories: number
+      carbohydrates: number
+      fat: number
+      image_large: string
+      name: string
+      proteins: number
+      type: string
+    }
+  }
+
+  orderNumber: {
+    postOrderNumber: number,
+    postOrderRequest: boolean,
+    postOrderFailed: boolean
+  }
 }
 
 export type TIngredient = {
@@ -116,9 +132,8 @@ export type TCurrentIngredientState = {
 }
 
 // state in order-reducer
-export type TOrderPriceState = {
-  orderPrice: number
-}
+export type TOrderPriceState = number
+
 
 // state in post-order-reduser
 export type TPostOrderState = {
@@ -156,14 +171,39 @@ export type TWSMiddlewareActions = {
   wsConnecting: string
 }
 
-// ingredientdetails-page
-export type TIngredientDetails = {
-  name: string,
-  calories: number,
-  proteins: number,
-  fat: number,
-  carbohydrates: number,
-  image_large: string,
-  type: string,
+export type TResponse = {
+  success: boolean;
+  message?: string;
+  headers?: Headers;
+  refreshToken: string;
+  accessToken: string;
+  postToken: string
+};
+
+// logout-api
+export type THeaders = {
+  authorization: string | null;
+  "Content-Type": string;
 }
 
+export type TRegisterProps = {
+  email: string,
+  password: string,
+  name: string
+}
+
+export type TLogout = {
+  message: string;
+  success: boolean;
+  refreshToken: string;
+}
+
+export type TAuthResponse = {
+  success: boolean,
+  user?: {
+    email: string,
+    name: string
+  }
+}
+
+export type TIngredientId = string

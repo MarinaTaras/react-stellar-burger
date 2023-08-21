@@ -17,7 +17,7 @@ function ForgotpasswordPage() {
 
   function onForgotClick(e: MouseEvent<HTMLFormElement>) {
     e.preventDefault()
-    postForgot(form)
+    postForgot(form.email)
       .then(() => navigate('/reset-password', { replace: true }))
       .catch(e => console.log('ошибка', e))
   }

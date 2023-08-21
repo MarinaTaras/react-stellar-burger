@@ -1,4 +1,3 @@
-import { log } from "console";
 import { CHANGE_COUNT, GET_INGRIDIENTS_FAILED, GET_INGRIDIENTS_REQUEST, GET_INGRIDIENTS_SUCCESS, TGetIngridientsActions} from "../actions/actions"
 import { IReducersState } from "../types";
 

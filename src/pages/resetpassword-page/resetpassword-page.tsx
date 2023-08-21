@@ -1,5 +1,4 @@
 import React, { useState, MouseEvent, ChangeEvent } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 

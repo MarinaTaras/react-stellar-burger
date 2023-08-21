@@ -3,7 +3,7 @@ import { POST_ORDER_FAILED, POST_ORDER_REQUEST, POST_ORDER_SUCCESS, TPostOrderAc
 import { TPostOrderState } from "../types";
 
 
-const initialState = {
+const initialState: TPostOrderState = {
   postOrderNumber: 0,
   postOrderRequest: false,
   postOrderFailed: false,

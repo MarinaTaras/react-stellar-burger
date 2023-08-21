@@ -1,10 +1,12 @@
+import { THeaders, TResponse, TUser } from "../services/types";
+
 // Эндпоинт для обновления токена
 const TOKEN_HTTP = 'https://norma.nomoreparties.space/api/auth/token'
 //проверка запросов сервера
-const checkResponse = (res) => {
+const checkResponse = (res: Response) => {
     return res.ok 
-  ? res.json().then((res) => Promise.resolve(res))
-  : res.json().then((err) => Promise.reject(err))
+  ? res.json().then((res: Response) => Promise.resolve(res))
+  : res.json().then((err: string) => Promise.reject(err))
 };
 
 export function postToken() {
@@ -18,13 +20,14 @@ export function postToken() {
     
 }
 
-export const fetchWithRefresh = async (url, options) => {
+export const fetchWithRefresh = 
+async <T>(url: string, options: RequestInit & { headers: THeaders}): Promise<T> => {
   try {
     const res = await fetch(url, options);
-    return await checkResponse(res);
+    return await <T>checkResponse(res);
   } catch (err) {
     if (err.message === "jwt expired") {
-      const refreshData = await postToken(); //обновляем токен
+      const refreshData = await postToken() as unknown as TResponse; //обновляем токен
       if (!refreshData.success) {
         return Promise.reject(refreshData);
       }
@@ -32,7 +35,7 @@ export const fetchWithRefresh = async (url, options) => {
       localStorage.setItem("accessToken", refreshData.accessToken);
       options.headers.authorization = refreshData.accessToken;
       const res = await fetch(url, options); //повторяем запрос
-      return await checkResponse(res);
+      return await <T>checkResponse(res);
     } else {
       return Promise.reject(err);
     }

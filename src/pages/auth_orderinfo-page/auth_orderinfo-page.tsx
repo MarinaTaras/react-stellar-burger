@@ -6,12 +6,12 @@ import styles from './auth_orderinfo-page.module.css'
 import IngredientsInfo from '../../components/ingredients-info/ingredients-info';
 import { authConnect, authDisconnect } from '../../services/actions/feed_auth-actions';
 import { wsAuthUrl } from '../../services/store';
-import { TOrder, TState, useAppDispatch } from '../../services/types';
+import { TOrder, TState, useAppDispatch, useAppSelector } from '../../services/types';
 
 function AuthOrderInfo() {
   const location = useLocation()
   const dispatch = useAppDispatch()
-  const user = useSelector((state: TState) => state.auth.user);
+  const user = useAppSelector((state: TState) => state.auth.user);
   const background = location.state?.background;
   //находим токен, отрезаем Bearer
   const accessToken = localStorage.getItem("accessToken")?.slice(7);
@@ -21,7 +21,7 @@ function AuthOrderInfo() {
   }, []);
 
   //все заказы
-  const orders = useSelector((state: TState) => state.feedAuth.orders);
+  const orders = useAppSelector((state: TState) => state.feedAuth.orders);
   const { id } = useParams<keyof Params>() as Params;
 
   // в момент, когда данных нет, не выдает ошибку:

@@ -12,13 +12,13 @@ import { authConnect } from '../../services/actions/feed_auth-actions';
 import EditProfile from '../../components/edit-profile/edit-profile';
 import OrderContents from '../../components/order-contents/order-contents';
 import OrdersHistory from '../../components/orders-history/orders-history';
-import { TState } from '../../services/types';
+import { TResponse, TState, useAppDispatch, useAppSelector } from '../../services/types';
 
 function ProfilePage() {
   const location = useLocation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const user = useSelector((state: TState) => state.auth.user);
+  const user = useAppSelector((state: TState) => state.auth.user);
   const background = location.state?.background;
   //находим токен, отрезаем Bearer
   const accessToken = localStorage.getItem("accessToken")?.slice(7);
@@ -29,7 +29,7 @@ function ProfilePage() {
   }, []);
 
   // находим заказы пользователя
-  const orders = useSelector((state: TState) => state.feedAuth);
+  const orders = useAppSelector((state: TState) => state.feedAuth);
 
 
   function onLogOut() {
@@ -40,8 +40,8 @@ function ProfilePage() {
           localStorage.removeItem("refreshToken")
         }
       })
-      .then((res) => (dispatch(setUser(null))))
-      .then((res) => navigate('/login', { replace: true }))
+      .then(() => (dispatch(setUser(null))))
+      .then(() => navigate('/login', { replace: true }))
 
   }
 

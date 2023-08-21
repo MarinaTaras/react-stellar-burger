@@ -1,7 +1,7 @@
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ingredients-info.module.css'
 import { useSelector } from 'react-redux';
-import { TOrder, TState } from '../../services/types';
+import { TOrder, TState, useAppSelector } from '../../services/types';
 
 
 function IngredientsInfo(props: { order: TOrder }) {
@@ -12,7 +12,7 @@ function IngredientsInfo(props: { order: TOrder }) {
   let orderPrice = 0
 
   // находим все ингредиенты для заполнения списка
-  const { items } = useSelector((state: TState) => state.ingredients)
+  const { items } = useAppSelector((state: TState) => state.ingredients)
   // функция для нахождения одинаковых ингредиентов
   const ingedientCount = (itemId: string) => {
     const ingredientsList= order.ingredients.filter(

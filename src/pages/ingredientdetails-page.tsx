@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
 import { useParams } from "react-router-dom";
-import { TIngredient, TIngredientDetails, TState } from "../services/types";
+import { TIngredient, TState } from "../services/types";
 
 function IngredientDetailsPage() {
   const dispatch = useDispatch()

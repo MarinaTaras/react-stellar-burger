@@ -2,11 +2,9 @@ import {
   ADD_CONSTRUCTOR_INGRIDIENT,
   REMOVE_INGRIDIENT, SORT_ITEMS, TConstructorActions
 } from "../actions/actions"
-import { state } from "../state.js"
-
 import { TIngredient } from "../types";
 
-const initialState: any = [];
+const initialState: TIngredient[] = [];
 
 export const ingridientConstructorReducer =
   (state = initialState, action: TConstructorActions) => {
@@ -24,7 +22,7 @@ export const ingridientConstructorReducer =
       }
 
       case REMOVE_INGRIDIENT: {
-        const ingredients = state.filter((item: { uuid: string | undefined; }) => item.uuid !== action.data.uuid);
+        const ingredients = state.filter((item: TIngredient) => item.uuid !== action.data.uuid);
         return ingredients
       }
 

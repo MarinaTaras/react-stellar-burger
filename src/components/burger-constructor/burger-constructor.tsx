@@ -1,11 +1,7 @@
 import React, { useCallback } from "react";
 import { useState } from 'react'
 import styles from "./burger-constructor.module.css";
-import {
-  ConstructorElement, CurrencyIcon, Button
-} from '@ya.praktikum/react-developer-burger-ui-components'
-import { ingredientPropType } from "../../utils/prop-types";
-import PropTypes from "prop-types";
+import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,22 +11,22 @@ import { ConstructorItem } from "../constructor-item/constructor-item";
 import { postOrderRequest } from "../../services/actions/api-actions";
 import { getCookie } from "../../utils/get-cookie";
 import { useLocation, useNavigate } from 'react-router-dom';
-import { TIngredient, TState } from "../../services/types";
+import { AppDispatch, TIngredient, TState, useAppDispatch, useAppSelector } from "../../services/types";
 
 type TProps = {
   onDropHandler: (item: TIngredient) => void
 }
 
-function BurgerConstructor({ onDropHandler }: TProps) {
+function BurgerConstructor({ onDropHandler }: TProps ) {
 
   const dispatch = useDispatch()
-  const items = useSelector((state: TState) => state.constructorIngredients);
+  const items = useAppSelector((state: TState) => state.constructorIngredients);
 
-  const totalPrice = useSelector((state: TState) => state.orderPrice)
+  const totalPrice = useAppSelector((state: TState) => state.orderPrice)
   //const [order, setOrder] = useState()
   const cookie = getCookie('token');
   const navigate = useNavigate()
-  const user = useSelector((state: TState) => state.auth.user);
+  const user = useAppSelector((state: TState) => state.auth.user);
   const location = useLocation();
 
   //реализация перетаскивания
@@ -57,7 +53,7 @@ function BurgerConstructor({ onDropHandler }: TProps) {
 
     if (!user) return navigate("/login", { replace: true });
 
-    const idArr = items.map((item: TIngredient) => item._id)
+    const idArr = items.map((item) => item._id)
     dispatch(postOrderRequest(idArr))
     setVisible(true)
 

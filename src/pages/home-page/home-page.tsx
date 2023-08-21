@@ -9,18 +9,17 @@ import { useStore } from 'react-redux';
 import { v4 as uuidv4 } from "uuid";
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
-import { TIngredient, TState, useAppDispatch } from "../../services/types";
+import { TIngredient, TState, useAppDispatch, useAppSelector } from "../../services/types";
 
 
 
 function HomePage() {
   const dispatch = useAppDispatch()
   const store = useStore()
-  const { items, loading, errors } = useSelector((state: TState) => state.ingredients);
+  const { items, loading, errors } = useAppSelector((state: TState) => state.ingredients);
 
   // реализация перетаскивания
   const handleDrop = (data: TIngredient) => {
-    //console.log('data', data)
     data.uuid = uuidv4()
     const addConstructorIngridient = {
       type: ADD_CONSTRUCTOR_INGRIDIENT,

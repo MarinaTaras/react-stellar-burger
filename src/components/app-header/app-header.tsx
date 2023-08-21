@@ -8,7 +8,7 @@ type TAppHeaderProps = {
   isActive: boolean;
 }
 
-function AppHeader() {
+const AppHeader: FC = () => {
   const style = ({ isActive }: TAppHeaderProps) =>
     isActive
       ? `${headerStyle.nav_link} ${headerStyle.nav_link_active} text_type_main-default pl-2`

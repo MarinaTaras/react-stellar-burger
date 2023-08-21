@@ -6,10 +6,11 @@ import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-de
 import styles from './registration-page.module.css';
 import postRegister from '../../utils/register-api';
 import { POST_REGISTER_SUCCESS } from '../../services/actions/auth-actions';
+import { useAppDispatch } from '../../services/types';
 
 
 function RegistrationPage() {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const [form, setValue] = useState({ name: "", email: "", password: "" });
 
@@ -21,7 +22,10 @@ function RegistrationPage() {
   function onRegistrationClick(e: MouseEvent<HTMLFormElement>) {
     e.preventDefault()
     postRegister(form)
-      .then((data) => dispatch({ type: POST_REGISTER_SUCCESS, data }))
+      .then((data) => {
+        return dispatch({ type: POST_REGISTER_SUCCESS, data })
+        })
+        
       .then((res) => (
         localStorage.setItem("accessToken", res.data.accessToken),
         localStorage.setItem("refreshToken", res.data.refreshToken)))

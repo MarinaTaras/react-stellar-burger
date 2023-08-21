@@ -1,7 +1,7 @@
 
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
-import { TState } from '../../services/types'
+import { TState, useAppSelector } from '../../services/types'
 
 type TProtectedRouteProps = {
   onlyUnAuth: boolean,
@@ -15,7 +15,7 @@ export const ProtectedRouteElement = ({ onlyUnAuth = false, component }: TProtec
 
   const isAuthChecked = useSelector((state: TState) => state.auth.isAuthChecked)
 
-  const user = useSelector((state: TState) => state.auth.user);
+  const user = useAppSelector((state: TState) => state.auth.user);
   const location = useLocation();
 
   if (!isAuthChecked) {

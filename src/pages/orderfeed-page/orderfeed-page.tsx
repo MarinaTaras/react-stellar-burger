@@ -14,7 +14,7 @@ import { wsUrl } from '../../services/store';
 import { feedReducer } from '../../services/reducers/feed-reduser';
 
 import { rootReducer } from '../../services/reducers/index'
-import { TState, useAppDispatch } from '../../services/types';
+import { TState, useAppDispatch, useAppSelector } from '../../services/types';
 
 function OrderFeedPage() {
   const dispatch = useAppDispatch()
@@ -26,7 +26,7 @@ function OrderFeedPage() {
     return () => dispatch(wsDisconnect())
   }, [dispatch]);
 
-  const orders = useSelector((state: TState) => state.feed);
+  const orders = useAppSelector((state: TState) => state.feed);
 
   return (
     <main className={styles.main}>

@@ -6,10 +6,11 @@ import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer
 import styles from './login-page.module.css';
 import postLogin from '../../utils/login-api';
 import { POST_LOGIN_SUCCESS } from '../../services/actions/auth-actions';
+import { useAppDispatch } from '../../services/types';
 
 function LoginPage() {
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const navigate = useNavigate();
   const [form, setValue] = useState({ email: '', password: '' });
 
